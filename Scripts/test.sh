@@ -26,7 +26,7 @@ run_test() {
     shift
     printf "\n\n\n\n\n\n\n\n\n\n"
     echo "$test"
-    $ROOT/compile.py --dead-code-elimination $compile_opts $* Programs/$test || exit 1
+    $ROOT/compile.py a --dead-code-elimination $compile_opts $* Programs/$test || exit 1
     Scripts/run-online.sh Programs/$test || exit 1
     python Scripts/test-result.py $test_opts $test || exit 1
 }
