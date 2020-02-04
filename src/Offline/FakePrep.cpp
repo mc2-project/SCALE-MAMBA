@@ -24,6 +24,8 @@ FakePrep::FakePrep(Player &P) : P(P)
   rewind_triples= false;
   rewind_squares= false;
   rewind_bits= false;
+  string path = "/root/triple/triple" + to_string(P.whoami()) + ".txt";
+  triples_file.open(path, ios::in);
 }
 
 void FakePrep::produce_triples(list<Share> &a, list<Share> &b, list<Share> &c)
@@ -71,6 +73,9 @@ void FakePrep::produce_triples(list<Share> &a, list<Share> &b, list<Share> &c)
           b.push_back(sb[0]);
           c.push_back(sc[0]);
 
+	  cout << P.whoami() << " Share a: " << sa[0].get_shares()[0] << endl;
+	  cout << P.whoami() << " Mac share a: " << sa[0].get_macs()[0] << endl;
+
           for (unsigned int j= 1; j < P.nplayers(); j++)
             {
               stringstream ss;
@@ -102,6 +107,74 @@ void FakePrep::produce_triples(list<Share> &a, list<Share> &b, list<Share> &c)
   triples[2]= c;
   rewind_triples= true;
 }
+
+void FakePrep::produce_triples_from_input(list<Share> &a, list<Share> &b, list<Share> &c)
+{
+  if (rewind_triples)
+    {
+      a= triples[0];
+      b= triples[1];
+      c= triples[2];
+      return;
+    }
+  init_fake();
+  gfp aa, bb, cc;
+  int n= P.nplayers();
+  vector<gfp> amacs(Share::SD.nmacs);
+  vector<gfp> bmacs(Share::SD.nmacs);
+  vector<gfp> cmacs(Share::SD.nmacs);
+  vector<Share> sa(n), sb(n), sc(n);
+  for (int i= 0; i < 1; i++)
+    { 
+      /*
+      aa.input(triples_file, false);
+      amacs[0].input(triples_file, false);
+
+      bb.input(triples_file, false);
+      bmacs[0].input(triples_file, false);
+
+      cc.input(triples_file, false);
+      cmacs[0].input(triples_file, false);
+      
+      cout << "Share a: " << aa << endl;
+      cout << "Mac share a: " << amacs[0] << endl;
+      cout << "Share b: " << bb << endl;
+      cout << "Mac share b: " << bmacs[0] << endl;
+      cout << "Share c: " << cc << endl;
+      cout << "Mac shares c: " << cmacs[0] << endl;
+      */
+      
+      Share share_a(P.whoami());
+      share_a.input(triples_file, false);
+      Share share_b(P.whoami());
+      share_b.input(triples_file, false);
+      Share share_c(P.whoami());
+      share_c.input(triples_file, false);
+      a.push_back(share_a);
+      b.push_back(share_b);
+      c.push_back(share_c);
+
+       
+      cout << P.whoami() << " Share a: " << share_a.get_shares()[0] << endl;
+      cout << P.whoami() << " Mac share a: " << share_a.get_macs()[0] << endl;
+  
+      cout << P.whoami() << " Share b: " << share_b.get_shares()[0] << endl;
+      cout << P.whoami() << " Mac share b: " << share_b.get_macs()[0] << endl;
+      cout << P.whoami() << " Share c: " << share_c.get_shares()[0] << endl;
+      cout << P.whoami() << " Mac share c: " << share_c.get_macs()[0] << endl;
+    
+  	for (int i = 0; i < sz_offline_batch - 1; i++) {
+	  a.push_back(share_a);
+	  b.push_back(share_b);
+	  c.push_back(share_c);
+  	}
+  }
+  triples[0]= a;
+  triples[1]= b;
+  triples[2]= c;
+  rewind_triples= true;
+}
+
 void FakePrep::produce_squares(list<Share> &a, list<Share> &b, unsigned int rep)
 {
   if (rewind_squares)

@@ -11,7 +11,7 @@ All rights reserved
 #include "LSSS/PRZS.h"
 #include "System/Player.h"
 #include <list>
-
+#include <fstream>
 class FakePrep
 {
   //stored triples
@@ -27,9 +27,13 @@ class FakePrep
 
   Player &P;
 
+  // File for reading in triples
+  std::ifstream triples_file;
+
 public:
   FakePrep(Player &P);
   void produce_triples(list<Share> &a, list<Share> &b, list<Share> &c);
+  void produce_triples_from_input(list<Share> &a, list<Share> &b, list<Share> &c);
   void produce_squares(list<Share> &a, list<Share> &b, unsigned int rep= 1);
   void produce_bits(list<Share> &b);
 };

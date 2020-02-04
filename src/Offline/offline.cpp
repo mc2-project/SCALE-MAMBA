@@ -25,7 +25,12 @@ void offline_phase_triples(Player &P, PRSS &prss, PRZS &przs, FakePrep &prep, li
 {
   if (Share::SD.Otype == Fake)
     {
+#ifdef READ
+      prep.produce_triples_from_input(a, b, c);
+#else
       prep.produce_triples(a, b, c);
+#endif
+
     }
   else if (Share::SD.Otype == Maurer)
     {
