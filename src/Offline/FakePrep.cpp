@@ -126,24 +126,6 @@ void FakePrep::produce_triples_from_input(list<Share> &a, list<Share> &b, list<S
   vector<Share> sa(n), sb(n), sc(n);
   for (int i= 0; i < 1; i++)
     { 
-      /*
-      aa.input(triples_file, false);
-      amacs[0].input(triples_file, false);
-
-      bb.input(triples_file, false);
-      bmacs[0].input(triples_file, false);
-
-      cc.input(triples_file, false);
-      cmacs[0].input(triples_file, false);
-      
-      cout << "Share a: " << aa << endl;
-      cout << "Mac share a: " << amacs[0] << endl;
-      cout << "Share b: " << bb << endl;
-      cout << "Mac share b: " << bmacs[0] << endl;
-      cout << "Share c: " << cc << endl;
-      cout << "Mac shares c: " << cmacs[0] << endl;
-      */
-      
       Share share_a(P.whoami());
       share_a.input(triples_file, false);
       Share share_b(P.whoami());
@@ -156,18 +138,12 @@ void FakePrep::produce_triples_from_input(list<Share> &a, list<Share> &b, list<S
 
        
       cout << P.whoami() << " Share a: " << share_a.get_shares()[0] << endl;
-      cout << P.whoami() << " Mac share a: " << share_a.get_macs()[0] << endl;
-  
+      cout << P.whoami() << " Mac share a: " << share_a.get_macs()[0] << endl; 
       cout << P.whoami() << " Share b: " << share_b.get_shares()[0] << endl;
       cout << P.whoami() << " Mac share b: " << share_b.get_macs()[0] << endl;
       cout << P.whoami() << " Share c: " << share_c.get_shares()[0] << endl;
       cout << P.whoami() << " Mac share c: " << share_c.get_macs()[0] << endl;
     
-  	for (int i = 0; i < sz_offline_batch - 1; i++) {
-	  a.push_back(share_a);
-	  b.push_back(share_b);
-	  c.push_back(share_c);
-  	}
   }
   triples[0]= a;
   triples[1]= b;
